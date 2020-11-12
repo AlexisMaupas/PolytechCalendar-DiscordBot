@@ -1,4 +1,4 @@
-﻿//Bot designed by Krisix
+//Bot designed by Alexis
 
 const fetch = require("node-fetch");
 var ical2json = require("ical2json");
@@ -25,7 +25,7 @@ bot.on('message', function(message){
     
 
 
-    if(message.content=== '.next'){
+    if(message.content=== '.next' || message.content=== 'b'){
 
 
         edtFile = require ('./files/edt.json') 
@@ -56,7 +56,7 @@ bot.on('message', function(message){
         var today = new Date();
         var datetime =calculateDateTime(today.getFullYear(),today.getMonth()+1,today.getDate(),today.getHours(),10*Math.floor((today.getMinutes())/10));
 
-        //var datetime = '20201128T080000Z'
+        //var datetime = '20201114T080000Z'
          
         console.log(datetime)
 
@@ -171,7 +171,10 @@ bot.on('message', function(message){
                 _event = edtFile.VCALENDAR[0].VEVENT[item].SUMMARY
                 _start = edtFile.VCALENDAR[0].VEVENT[item].DTSTART
                 _end = edtFile.VCALENDAR[0].VEVENT[item].DTEND
+
                 _event = _event.replace(/&apos\\;/g, "'")
+                _event = _event.replace(/\\,/g, ',');
+
 
                 hourstart = parseInt(_start.slice(9, 11))+1;
                 let minstart = _start.slice(11, 13)
@@ -223,19 +226,15 @@ bot.on('message', function(message){
 	    //.setAuthor(message.author.username, message.author.avatarURL())
         .setTitle("Informatins PolyCalendar - Bot")
         .setURL("https://www.google.fr")
-        .setDescription("**Commandes :**")
+        .setDescription("\n**Commandes :**")
+        .setThumbnail('https://www.vinsguru.com/wp-content/uploads/2018/12/execute-around-header.gif')
         .addFields(
 		        { name: '**.next**', value: 'donne le prochain cours', inline: false },
                 { name: '**.update**', value: "met à jour l'emploi du temps du bot", inline: false },
 		        { name: '**.now**', value: "affiche la date actuelle", inline: false },
                 { name: '**.help**', value: "affiche les infos du bot", inline: false },
 	    )
-        .addFields(
-		        { name: '** **', value: '© 2020 PolyCalendar Alexis', inline: false },
-
-	    )
-	    .setTimestamp()
-	    .setFooter('Made by Alexis', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
+	    .setFooter('© 2020 PolyCalendar - Tous droits réservés ', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
 
         message.channel.send(helpEmbed);
 
@@ -378,13 +377,12 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         //background
 	    const background = await Canvas.loadImage('./images/back.png').catch(console.error);
 	    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-	    /*ctx.strokeStyle = '#ffffff';
+	    /*ctx.strokeStyle = '#000000';
 	    ctx.strokeRect(0, 0, canvas.width, canvas.height);*/
         
 
         const words = _event.split(' - ');
 
-        
 
         let cours = ""
         if(_event.includes("TD")){
@@ -401,6 +399,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 			}
 		}
 
+
         //TD or CM
         var varSize  = -8.75 * cours.length + 94.5;
         let font = varSize +'px Arial';
@@ -408,7 +407,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         ctx.fillStyle = '#ff564d';
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(cours, 245, 115); //245, 145
+        ctx.fillText(cours, 247.5, 115); //245, 145
     
 
         var max = 24
@@ -422,23 +421,18 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         //Matière Texte
         if(lines >3.05){
            const summarywords = summary.split('\n');
-
-           for(i = 0; i<2;i++){
-                ctx.font = '40px Arial';
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = "center";
+           ctx.font = '30px Arial';
+           ctx.fillStyle = '#ffffff';
+           ctx.textAlign = "center";   
+           for(i = 0; i<2;i++){            
                 ctx.fillText(summarywords[i], 250, 320+i*45);
-           }
-                ctx.font = '40px Arial';
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = "center";
-                ctx.fillText("...", 250, 390);
+           }                
+           ctx.fillText("...", 250, 390);
            
         }else if (2.05<lines && lines <= 3.05){
-            const summarywords = summary.split('\n');
-
+           const summarywords = summary.split('\n');
            summarywords.forEach(function(item, index, array) {
-                ctx.font = '40px Arial';
+                ctx.font = '30px Arial';
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = "center";
                 ctx.fillText(item, 250, 325+index*45);
@@ -447,23 +441,21 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
             var varSize2 = -1.1466 * summary.length + 68.102;
             ctx.font = varSize2 +'px Arial';
             ctx.fillStyle = '#ffffff';
-             ctx.textBaseline = "middle";
+            ctx.textBaseline = "middle";
             ctx.textAlign = "center";
             ctx.fillText(summary, 250, 335);
         }
 
-        ctx.textBaseline = "alphabetic";
 
-        //Hour Start Texte
         ctx.font = '50px Arial';
         ctx.fillStyle = '#ffffff';
+        ctx.textBaseline = "alphabetic";
         ctx.textAlign = "center";
+
+        //Hour Start Texte
         ctx.fillText(hourstart+'h'+minstart, 125, 485);
 
         //Hour End Texte
-        ctx.font = '50px Arial';
-        ctx.fillStyle = '#ffffff';
-        ctx.textAlign = "center";
         ctx.fillText(hourend+'h'+minend, 375, 485);
 
         //Date Texte
@@ -529,8 +521,8 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         ctx.fillText(info, 250, 635);
 
         let groupe = ""
-        if(words[words.length-1].length>20){
-            groupe = words[words.length-1].slice(0, 17) + '...';
+        if(words[words.length-1].length>35){
+            groupe = words[words.length-1].slice(0, 32) + '...';
 		}else{
             groupe =   words[words.length-1];
 		}
@@ -551,7 +543,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 	    .attachFiles(attachment)
         .setImage('attachment://edt.png')
 	    .setTimestamp()
-	    .setFooter('Made by Alexis', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
+	    .setFooter('© Alexis', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
 
         if(link.startsWith("https")){
         	embed.setTitle('Lien du cours')
