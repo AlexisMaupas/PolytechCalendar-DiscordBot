@@ -403,7 +403,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 
         //TD or CM
         var varSize  = -8.75 * cours.length + 94.5;
-        let font = varSize +'px sans-serif';
+        let font = varSize +'px Arial';
         ctx.font = font;
         ctx.fillStyle = '#ff564d';
         ctx.textAlign = "center";
@@ -424,12 +424,12 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
            const summarywords = summary.split('\n');
 
            for(i = 0; i<2;i++){
-                ctx.font = '40px sans-serif';
+                ctx.font = '40px Arial';
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = "center";
                 ctx.fillText(summarywords[i], 250, 320+i*45);
            }
-                ctx.font = '40px sans-serif';
+                ctx.font = '40px Arial';
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = "center";
                 ctx.fillText("...", 250, 390);
@@ -438,14 +438,14 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
             const summarywords = summary.split('\n');
 
            summarywords.forEach(function(item, index, array) {
-                ctx.font = '40px sans-serif';
+                ctx.font = '40px Arial';
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = "center";
                 ctx.fillText(item, 250, 325+index*45);
            });
         }else{
             var varSize2 = -1.1466 * summary.length + 68.102;
-            ctx.font = varSize2 +'px sans-serif';
+            ctx.font = varSize2 +'px Arial';
             ctx.fillStyle = '#ffffff';
              ctx.textBaseline = "middle";
             ctx.textAlign = "center";
@@ -455,19 +455,19 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         ctx.textBaseline = "alphabetic";
 
         //Hour Start Texte
-        ctx.font = '50px sans-serif';
+        ctx.font = '50px Arial';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = "center";
         ctx.fillText(hourstart+'h'+minstart, 125, 485);
 
         //Hour End Texte
-        ctx.font = '50px sans-serif';
+        ctx.font = '50px Arial';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = "center";
         ctx.fillText(hourend+'h'+minend, 375, 485);
 
         //Date Texte
-        ctx.font = '35px sans-serif';
+        ctx.font = '35px Arial';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = "center";
         ctx.fillText(daystart+'/'+monthstart+'/'+yearstart, 250, 540);
@@ -523,7 +523,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         //images
 
         //Info Texte
-        ctx.font = '40px sans-serif';
+        ctx.font = '40px Arial';
         ctx.fillStyle = '#ff564d';
         ctx.textAlign = "center";
         ctx.fillText(info, 250, 635);
@@ -536,7 +536,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 		}
 
         //Groupe Texte
-        ctx.font = 'italic 20px sans-serif';
+        ctx.font = 'italic 20px Arial';
         ctx.fillStyle = '#a3a3a3';
         ctx.textAlign = "center";
         ctx.fillText(groupe, 250, 580);
