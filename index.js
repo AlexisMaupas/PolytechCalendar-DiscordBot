@@ -25,7 +25,7 @@ bot.on('message', function(message){
     
 
 
-    if(message.content=== '.next' || message.content=== 'b'){
+    if(message.content=== '.next'){
 
 
         edtFile = require ('./files/edt.json') 
@@ -222,7 +222,7 @@ bot.on('message', function(message){
     if(message.content === '.help'){
 
         const helpEmbed = new Discord.MessageEmbed()
-	    .setColor('#ff564d') //#ff564d
+	 .setColor('#ff564d') //#ff564d
 	    //.setAuthor(message.author.username, message.author.avatarURL())
         .setTitle("Informatins PolyCalendar - Bot")
         .setURL("https://www.google.fr")
@@ -421,7 +421,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         //Matière Texte
         if(lines >3.05){
            const summarywords = summary.split('\n');
-           ctx.font = '30px Arial';
+           ctx.font = '35px Arial';
            ctx.fillStyle = '#ffffff';
            ctx.textAlign = "center";   
            for(i = 0; i<2;i++){            
@@ -432,7 +432,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         }else if (2.05<lines && lines <= 3.05){
            const summarywords = summary.split('\n');
            summarywords.forEach(function(item, index, array) {
-                ctx.font = '30px Arial';
+                ctx.font = '35px Arial';
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = "center";
                 ctx.fillText(item, 250, 325+index*45);
