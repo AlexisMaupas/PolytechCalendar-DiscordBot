@@ -15,7 +15,7 @@ let lastUpdate = '01'
 
 bot.on('ready', function(){
     //bot.user.setAvatar('./gif-anime.gif').catch(console.error)
-    bot.user.setActivity("13h30 - TD - PRDM" , 'WATCHING').catch(console.error)
+    bot.user.setActivity(".next pour avoir le lien du prochain cours" , 'WATCHING').catch(console.error)
     console.log("Le bot est en ligne")
 })
 
@@ -222,22 +222,199 @@ bot.on('message', function(message){
     if(message.content === '.help'){
 
         const helpEmbed = new Discord.MessageEmbed()
-	 .setColor('#ff564d') //#ff564d
-	    //.setAuthor(message.author.username, message.author.avatarURL())
+	    .setColor('#ff564d') //#ff564d
         .setTitle("Informatins PolyCalendar - Bot")
-        .setURL("https://www.google.fr")
         .setDescription("\n**Commandes :**")
         .setThumbnail('https://www.vinsguru.com/wp-content/uploads/2018/12/execute-around-header.gif')
         .addFields(
 		        { name: '**.next**', value: 'donne le prochain cours', inline: false },
                 { name: '**.update**', value: "met à jour l'emploi du temps du bot", inline: false },
+                { name: '**.add Matière_TDouCM_TeamsouDiscord_Lien**', value: "ajoute ou modifie les informations d'un cours", inline: false },
 		        { name: '**.now**', value: "affiche la date actuelle", inline: false },
                 { name: '**.help**', value: "affiche les infos du bot", inline: false },
 	    )
-	    .setFooter('© 2020 PolyCalendar - Tous droits réservés ', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
+	    .setFooter('© 2020 Alexis - Tous droits réservés ', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
 
         message.channel.send(helpEmbed);
 
+	}
+
+    if(message.content.startsWith('.add')){
+
+        lessonFile = require ('./files/lessons.json')
+        let msgText = message.content;
+        msgText = msgText.replace('.add ', '');
+
+        if(msgText.includes("_")){
+           
+            const infos = msgText.split('_');
+            
+            if(infos.length == 4 && infos[0] != "" && infos[1] != "" && infos[2] != "" && infos[3] != ""){
+
+
+                var infoExist = LessonsExist(msgText);
+            
+                var alreadyExist = infoExist.exist,
+                    index = infoExist.index;
+
+
+                switch (alreadyExist) {
+                    case 0:
+
+                        //Ajout d'un nouveau cours qui existe sur l'edt
+
+                        //demandé pour vérifier s'il veut valider ou non			
+
+                        var nextlesson =  lessonFile.LESSONS.length;
+
+                        const AddEmbed = new Discord.MessageEmbed()
+	                    .setColor('#ffff89') //#ff564d
+	                    //.setAuthor(message.author.username, message.author.avatarURL())
+                        .setTitle("Ajouter les informations d'un cours ?")
+                        .setDescription("Ce cours n'a jamais été enregistré. Veuillez vérifier les informations avant d'enregistrer les informations.")
+                        .setThumbnail('https://www.vinsguru.com/wp-content/uploads/2018/12/execute-around-header.gif')
+                        .addFields(
+		                        { name: '**__Matière__**', value: "```fix\n"+infos[0]+"```", inline: false },
+                                { name: '**__Type (TD, CM, TP)__**', value: "```fix\n"+infos[1]+"```", inline: false },
+                                { name: '**__Emplacement (Discord, Teams, ...)__**', value: "```fix\n"+infos[2]+"```", inline: false },
+		                        { name: '**__Lien__**', value: "```fix\n"+infos[3]+"```", inline: false },
+	                    )
+	                    .setFooter('© 2020 Alexis - Tous droits réservés ', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
+
+                        message.channel.send(AddEmbed).then((msg) => {
+                          msg.react('✅');
+                          msg.react('❌');
+
+                  
+
+                            const filter = (reaction, user) => {
+                                return ['✅', '❌'].includes(reaction.emoji.name) && user.id != msg.author.id;
+                            };
+
+                
+                            msg.awaitReactions(filter, { max: 1, time: 15000, errors: ['time'] })
+                            .then(collected => {
+                                const reaction = collected.first();
+
+                                if (reaction.emoji.name === '✅') {
+                                   AddLesson(msgText, nextlesson);
+                                   message.channel.send("✅ Informations du cours de "+ infos +" ajoutées.");
+                                   msg.delete();
+                                   message.delete();
+                                }
+                                else {
+                                   message.channel.send("❌ Vous avez annulé!")
+                                   msg.delete();
+                                   message.delete();
+
+                                }
+                            })
+                            .catch(collected => {
+                                console.log(`After 15s, only ${collected.size} out of 1 reacted.`);
+                                msg.channel.send("❌ Action annulée car personne n'a réagit.");
+                                msg.delete();
+                                message.delete();
+
+                            });
+
+                        });
+
+
+                        break;
+                    case 1: 
+                      
+                         // need index to modify the informations (revoir function LessonsExist)
+
+                         // get the infos already saved
+
+                         let info = lessonFile.LESSONS[index].INFO;
+                         let lien = lessonFile.LESSONS[index].LINK;
+
+                         const ModifyEmbed = new Discord.MessageEmbed()
+	                    .setColor('#faa61a') //#ff564d
+                        .setTitle("Modifier les informations d'un cours ?")
+                        .setDescription("Ce cours a déjà été enregistré. Veuillez vérifier les informations avant d'effectuer la modification")
+                        .setThumbnail('https://www.vinsguru.com/wp-content/uploads/2018/12/execute-around-header.gif')
+                        .addFields(
+		                        { name: '**__Matière__**', value: "```css\n"+infos[0]+"```" , inline: true },
+                                { name: '**__Type (TD, CM, TP)__**', value: "```css\n"+infos[1]+"```", inline: true }
+                        )
+                        .addFields(
+                                { name: '\u200b', value: '**__Emplacement (Discord, Teams, ...)__**', inline: false },
+                                { name: '*__Old__*', value: "```"+info+"```", inline: true },
+                                { name: '*__New__*', value: "```fix\n"+infos[2]+"```", inline: true }
+                        )
+                        .addFields(
+                                { name: '\u200b', value: '**__Lien__**', inline: false },
+		                        { name: '*__Old__*', value: "```"+lien+"```", inline: true },
+		                        { name: '*__New__*', value: "```fix\n"+infos[3]+"```", inline: true }
+
+	                    )
+	                    .setFooter('© 2020 Alexis - Tous droits réservés ', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
+
+                        message.channel.send(ModifyEmbed).then((msg) => {
+                          msg.react('✅');
+                          msg.react('❌');
+
+                  
+
+                            const filter = (reaction, user) => {
+                                return ['✅', '❌'].includes(reaction.emoji.name) && user.id != msg.author.id;
+                            };
+
+                
+                            msg.awaitReactions(filter, { max: 1, time: 25000, errors: ['time'] })
+                            .then(collected => {
+                                const reaction = collected.first();
+
+                                if (reaction.emoji.name === '✅') {
+                                   AddLesson(msgText, index);
+                                   message.channel.send("✅ Modifications appliquées pour le cours de " + infos[0]);
+                                   msg.delete();
+                                   message.delete();
+                                }
+                                else {
+                                   message.channel.send("❌ Vous avez annulé les modifications!")
+                                   msg.delete();
+                                   message.delete();
+
+                                }
+                            })
+                            .catch(collected => {
+                                console.log(`After 15s, only ${collected.size} out of 1 reacted.`);
+                                msg.channel.send("❌ Modifications annulées car personne n'a réagit.");
+                                msg.delete();
+                                message.delete();
+
+                            });
+
+                        });
+
+
+                         break;
+
+                    case 2: 
+                        message.channel.send("❌ Les informations données ne correspondent à aucun cours");
+                        message.delete();
+                        break; 
+
+                    default:
+                        console.log('Error');
+                        message.channel.send("❌ Error");
+                        message.delete();
+                }
+
+            }else{
+                message.channel.send("❌ Mise en forme non correcte (.help)")
+                message.delete();  
+			}
+
+		}else{
+            message.channel.send("❌ Mise en forme non correcte (.help)")
+            message.delete();  
+		}
+
+       
 	}
 
     
@@ -287,8 +464,6 @@ bot.on('message', function(message){
 
 
 
- 
-
 const convert = async (fileLocation) => {
 
     try {  
@@ -306,10 +481,88 @@ const convert = async (fileLocation) => {
     
     console.log("Converted in JSON file")
 
+}
 
+function AddLesson (msg, index) {
+
+           const infos = msg.split('_');
+
+
+           lessonFile.LESSONS[index] = {
+              "NAME" : infos[0], 
+              "TYPE" : infos[1],
+              "INFO" : infos[2],
+              "LINK" : infos[3]
+			}
+            let data =JSON.stringify(lessonFile,null, 4);
+            fs.writeFileSync('./files/lessons.json' , data, err => {
+                if (err) throw err;
+
+            });
+
+            console.log('Data written to lessons.json');
 
 }
 
+function LessonsExist (msg) {
+
+
+
+        lessonFile = require ('./files/lessons.json') 
+        edtFile = require ('./files/edt.json') 
+        
+        const infos = msg.split('_');
+
+        var j=-1;
+        var i=0;
+        do{    
+            
+            let name = lessonFile.LESSONS[i].NAME;
+            let type = lessonFile.LESSONS[i].TYPE;
+
+            if(msg.includes(name) && (msg.includes(type)) ){
+                j=i
+			}
+
+            i++;
+        }while(j<0 && i<lessonFile.LESSONS.length);
+        
+        i=0;
+        var k =-1;
+        do{    
+            
+            let name = edtFile.VCALENDAR[0].VEVENT[i].SUMMARY
+
+            if(name.includes(infos[0]) && name.includes(infos[1])){
+                k=i
+			}
+
+            i++;
+        }while(k<0 && i<edtFile.VCALENDAR[0].VEVENT.length);
+
+        var exist = -10;
+        var index = -10;
+
+        if(j<0 && k>-1){
+            //new cours 
+            exist = 0;
+            index = -1;
+
+        }else if (j>-1 && k>-1){
+             //modifiier un cour + index cours à modifier
+            exist = 1;
+            index = j;
+
+		}else {
+            //autre le cours n'existe pas
+           exist = 2;
+           index = -1;
+		}
+
+        return {exist,index}; 
+
+
+}
 
 
 var download = function(url, dest, cb) {
@@ -401,16 +654,15 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 
 
         //TD or CM
-        var varSize  = -8.75 * cours.length + 94.5;
-        let font = varSize +'px Arial';
+        var varSize  = -10 * cours.length + 110;
+        let font = varSize +'px Calibri';
         ctx.font = font;
         ctx.fillStyle = '#ff564d';
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(cours, 247.5, 115); //245, 145
-    
-
-        var max = 24
+        
+        var max = 24;
         var lines = (words[2].length/max)+1;
                         
         let summary = splitString(words[2], max);
@@ -421,7 +673,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         //Matière Texte
         if(lines >3.05){
            const summarywords = summary.split('\n');
-           ctx.font = '35px Arial';
+           ctx.font = '42px Calibri';
            ctx.fillStyle = '#ffffff';
            ctx.textAlign = "center";   
            for(i = 0; i<2;i++){            
@@ -432,14 +684,14 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         }else if (2.05<lines && lines <= 3.05){
            const summarywords = summary.split('\n');
            summarywords.forEach(function(item, index, array) {
-                ctx.font = '35px Arial';
+                ctx.font = '42px Calibri';
                 ctx.fillStyle = '#ffffff';
                 ctx.textAlign = "center";
                 ctx.fillText(item, 250, 325+index*45);
            });
         }else{
             var varSize2 = -1.1466 * summary.length + 68.102;
-            ctx.font = varSize2 +'px Arial';
+            ctx.font = varSize2 +'px Calibri';
             ctx.fillStyle = '#ffffff';
             ctx.textBaseline = "middle";
             ctx.textAlign = "center";
@@ -447,22 +699,22 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         }
 
 
-        ctx.font = '50px Arial';
+        ctx.font = '58px Calibri';
         ctx.fillStyle = '#ffffff';
         ctx.textBaseline = "alphabetic";
         ctx.textAlign = "center";
 
         //Hour Start Texte
-        ctx.fillText(hourstart+'h'+minstart, 125, 485);
+        ctx.fillText(hourstart+'h'+minstart, 125, 475);
 
         //Hour End Texte
-        ctx.fillText(hourend+'h'+minend, 375, 485);
+        ctx.fillText(hourend+'h'+minend, 375, 475);
 
         //Date Texte
-        ctx.font = '35px Arial';
+        ctx.font = 'bold 45px Calibri';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = "center";
-        ctx.fillText(daystart+'/'+monthstart+'/'+yearstart, 250, 540);
+        ctx.fillText(daystart+'/'+monthstart+'/'+yearstart, 250, 535);
 
         
         let info =""
@@ -515,7 +767,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
         //images
 
         //Info Texte
-        ctx.font = '40px Arial';
+        ctx.font = 'bold 50px Calibri';
         ctx.fillStyle = '#ff564d';
         ctx.textAlign = "center";
         ctx.fillText(info, 250, 635);
@@ -528,8 +780,8 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 		}
 
         //Groupe Texte
-        ctx.font = 'italic 20px Arial';
-        ctx.fillStyle = '#a3a3a3';
+        ctx.font = 'italic 25px Calibri';
+        ctx.fillStyle = '#696969';
         ctx.textAlign = "center";
         ctx.fillText(groupe, 250, 580);
 
@@ -543,7 +795,7 @@ bot.on('ShowEDT', async (message, _event, hourstart,hourend,minstart,minend,days
 	    .attachFiles(attachment)
         .setImage('attachment://edt.png')
 	    .setTimestamp()
-	    .setFooter('© Alexis', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
+	    .setFooter('© 2020 Alexis', 'https://files.u-angers.fr/data/f-e452e5bcad91f088.jpg');
 
         if(link.startsWith("https")){
         	embed.setTitle('Lien du cours')
