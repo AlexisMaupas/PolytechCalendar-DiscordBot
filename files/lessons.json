@@ -4,13 +4,13 @@
             "NAME": "Anglais",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "Conversation ---> PEIP2 TD5 English Class"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Compléments d'algèbre",
             "TYPE": "CM",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_YTIwZDM0NDktNzFjZi00N2VkLTk4OGQtZWI5ZDQ4MWFjZGZi%40thread.v2/0?context=%7b%22Tid%22%3a%22ccbd4ee6-c847-429d-b947-a5cfdd04c963%22%2c%22Oid%22%3a%228eeb8fdf-42e7-4ccd-8058-0bb719ed6e39%22%7d"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Compléments d'algèbre",
@@ -22,85 +22,85 @@
             "NAME": "Thermique avancée",
             "TYPE": "CM",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3ad49d50e5739449808a13cd5bb4b77b72%40thread.tacv2/Thermique%2520avanc%25C3%25A9e?groupId=407f838c-5cee-40a5-be97-4b26cb782be8&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Thermique avancée",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3a2d0111b533224182a58617509acb2463%40thread.tacv2/Thermique%2520avanc%25C3%25A9e?groupId=2a8a4c96-6422-4941-88b5-fd51f6dddaa9&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Propriétés et résistance des matériaux",
             "TYPE": "CM",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3ae166c25eaa2e4d168ed20065530a115e%40thread.tacv2/Propri%25C3%25A9t%25C3%25A9s%2520et%2520R%25C3%25A9sistance%2520Des%2520Mat%25C3%25A9riaux?groupId=2a8a4c96-6422-4941-88b5-fd51f6dddaa9&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Propriétés et résistance des matériaux",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3ae166c25eaa2e4d168ed20065530a115e%40thread.tacv2/Propri%25C3%25A9t%25C3%25A9s%2520et%2520R%25C3%25A9sistance%2520Des%2520Mat%25C3%25A9riaux?groupId=2a8a4c96-6422-4941-88b5-fd51f6dddaa9&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Allemand",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3abb3b4f939f8a44bf8c449ebfd3677e2f%40thread.tacv2/G%25C3%25A9n%25C3%25A9ral?groupId=c5c758d5-35d7-4d32-8d8c-ed8362924c62&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Analyse des systèmes mécaniques",
             "TYPE": "CM",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3a441a7d43c07a4bd79ace24d9779b4d3d%40thread.tacv2/Analyse%2520des%2520Syst%25C3%25A8mes%2520M%25C3%25A9caniques?groupId=407f838c-5cee-40a5-be97-4b26cb782be8&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Culture numérique",
             "TYPE": "CM",
             "INFO": "Twitch",
-            "LINK": "https://www.twitch.tv/alain_godon"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Langage C",
             "TYPE": "TP",
             "INFO": "Discord",
-            "LINK": "https://discord.gg/b9WPYwxwXz"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Mathématiques du signal",
             "TYPE": "CM",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3a41b8734e424449ed866ed3c0406b520f%40thread.tacv2/Math%25C3%25A9matiques%2520du%2520Signal?groupId=407f838c-5cee-40a5-be97-4b26cb782be8&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Mathématiques du signal",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3a1d6491d453724d9a822968462ee2fab4%40thread.tacv2/Math%25C3%25A9matiques%2520du%2520signal?groupId=2a8a4c96-6422-4941-88b5-fd51f6dddaa9&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Chimie",
             "TYPE": "CM",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3ac048205e734c416bb9a6d93befcc95cf%40thread.tacv2/chimie?groupId=407f838c-5cee-40a5-be97-4b26cb782be8&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Chimie",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "https://teams.microsoft.com/l/channel/19%3a78fb737ccf104163857c6a3957f46d21%40thread.tacv2/Chimie?groupId=2a8a4c96-6422-4941-88b5-fd51f6dddaa9&tenantId=ccbd4ee6-c847-429d-b947-a5cfdd04c963"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Espagnol",
             "TYPE": "TD",
             "INFO": "Teams",
-            "LINK": "J'en sais rien frérot"
+            "LINK": "linkhide"
         },
         {
             "NAME": "Sport",
             "TYPE": "CM",
             "INFO": "STEPS",
-            "LINK": "Vas y à pied"
+            "LINK": "linkhide"
         }
     ]
 }
